@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Hugo Nunes Barbearia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #c19a6b;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--light-gray);
+        }
+
+        .login-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #b08a5a;
+        }
+
+        /* Admin Dashboard */
+        .admin-container {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            position: fixed;
+            height: 100%;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-header {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header h2 {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 1.5rem 0;
+        }
+
+        .menu-item {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-card .change {
+            font-size: 0.8rem;
+            color: #4caf50;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .change.negative {
+            color: #f44336;
+        }
+
+        .recent-bookings, .popular-services {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .status {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status.confirmed {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status.pending {
+            background-color: #fff8e1;
+            color: #ff8f00;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 1.5rem 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #b08a5a;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn-icon {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.3rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-icon:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table th {
+            font-weight: 600;
+            color: #666;
+            background-color: #f8f9fa;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Analytics Grid */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .analytics-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
+        
+        .analytics-card h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .analytics-card.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        /* Settings Grid */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .settings-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
+        
+        .settings-card h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="time"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        .time-inputs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .time-inputs input[type="time"] {
+            flex: 0 0 auto;
+            width: 120px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            margin: 0;
+            width: auto;
+        }
+        
+        .services-list {
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-name {
+            font-weight: 500;
+        }
+        
+        .service-price {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .service-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 250px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.6rem 2rem 0.6rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .service-chart {
+            height: 300px;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bar {
+            width: 50px;
+            background-color: var(--secondary-color);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+        }
+
+        .bar-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .sidebar-header h2, .menu-item span {
+                display: none;
+            }
+            
+            .menu-item {
+                justify-content: center;
+                padding: 0.8rem;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+                width: calc(100% - 70px);
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Nome de Utilizador</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Palavra-passe</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminDashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Hugo Nunes</h2>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item" data-section="bookings">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Marcações</span>
+                </div>
+                <div class="menu-item" data-section="customers">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </div>
+                <div class="menu-item" data-section="analytics">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Estatísticas</span>
+                </div>
+                <div class="menu-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Definições</span>
+                </div>
+                <div class="menu-item" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1 id="pageTitle">Bem-vindo, Hugo</h1>
+                <div class="user-menu">
+                    <div class="user-avatar">HN</div>
+                </div>
+            </div>
+            
+            <!-- Dashboard Content -->
+            <div class="content-section" id="dashboardSection">
+                <!-- Stats Overview -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Marcações Hoje</h3>
+                        <div class="value">8</div>
+                        <div class="change">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>2 do que ontem</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Visitantes do Site</h3>
+                        <div class="value">1,248</div>
+                        <div class="change">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>15% este mês</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Serviço Mais Popular</h3>
+                        <div class="value">Corte de Cabelo</div>
+                        <div class="change">
+                            <i class="fas fa-chart-line"></i>
+                            <span>20% das reservas</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Faturação Mensal</h3>
+                        <div class="value">€3,245</div>
+                        <div class="change negative">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>5% do mês passado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings -->
+                <div class="recent-bookings">
+                    <div class="section-header">
+                        <h2>Marcações de Hoje</h2>
+                        <a href="#" class="btn">Ver Todas</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Serviço</th>
+                                <th>Hora</th>
+                                <th>Barbeiro</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="todayBookings">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Popular Services -->
+                <div class="popular-services">
+                    <div class="section-header">
+                        <h2>Serviços Mais Populares</h2>
+                    </div>
+                    <div class="service-chart" id="serviceChart">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookings Content -->
+            <div class="content-section" id="bookingsSection" style="display: none;">
+                <div class="section-header">
+                    <h2>Todas as Marcações</h2>
+                    <button class="btn btn-primary" id="addBookingBtn">
+                        <i class="fas fa-plus"></i> Nova Marcação
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th>Cliente</th>
+                                <th>Serviço</th>
+                                <th>Barbeiro</th>
+                                <th>Estado</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allBookings">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customers Content -->
+            <div class="content-section" id="customersSection" style="display: none;">
+                <div class="section-header">
+                    <h2>Clientes</h2>
+                    <div class="search-box">
+                        <input type="text" placeholder="Procurar cliente...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Total de Visitas</th>
+                                <th>Última Visita</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersList">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Analytics Content -->
+            <div class="content-section" id="analyticsSection" style="display: none;">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Reservas por Mês</h3>
+                        <div class="chart-container">
+                            <canvas id="bookingsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Receita por Serviço</h3>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-card full-width">
+                        <h3>Desempenho dos Barbeiros</h3>
+                        <div class="chart-container">
+                            <canvas id="barbersChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="content-section" id="settingsSection" style="display: none;">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Informações da Barbearia</h3>
+                        <form id="shopInfoForm">
+                            <div class="form-group">
+                                <label>Nome da Barbearia</label>
+                                <input type="text" value="Hugo Nunes Barbearia">
+                            </div>
+                            <div class="form-group">
+                                <label>Morada</label>
+                                <input type="text" value="Av. 5 de Outubro, 2615-063 Alverca do Ribatejo">
+                            </div>
+                            <div class="form-group">
+                                <label>Telefone</label>
+                                <input type="tel" value="+351 969 976 530">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" value="info@hugonunesbarbearia.pt">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar Alterações</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Horário de Funcionamento</h3>
+                        <form id="openingHoursForm">
+                            <!-- Will be populated by JavaScript -->
+                            <button type="submit" class="btn btn-primary">Atualizar Horário</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Serviços</h3>
+                        <div class="services-list" id="servicesList">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                        <button class="btn btn-secondary" id="addServiceBtn">
+                            <i class="fas fa-plus"></i> Adicionar Serviço
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Marcações Hoje</h3>
+                    <div class="value">8</div>
+                    <div class="change">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>2 do que ontem</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Visitantes do Site</h3>
+                    <div class="value">1,248</div>
+                    <div class="change">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>15% este mês</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Serviço Mais Popular</h3>
+                    <div class="value">Corte de Cabelo</div>
+                    <div class="change">
+                        <i class="fas fa-chart-line"></i>
+                        <span>20% das reservas</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Faturação Mensal</h3>
+                    <div class="value">€3,245</div>
+                    <div class="change negative">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>5% do mês passado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="recent-bookings">
+                <div class="section-header">
+                    <h2>Marcações de Hoje</h2>
+                    <a href="#" class="btn">Ver Todas</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Serviço</th>
+                            <th>Hora</th>
+                            <th>Barbeiro</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="todayBookings">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Popular Services -->
+            <div class="popular-services">
+                <div class="section-header">
+                    <h2>Serviços Mais Populares</h2>
+                </div>
+                <div class="service-chart" id="serviceChart">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data - In a real app, this would come from a server
+        const todayBookings = [
+            { name: 'João Silva', service: 'Corte de Cabelo', time: '09:00', barber: 'Hugo', status: 'confirmed' },
+            { name: 'Miguel Santos', service: 'Barba', time: '10:00', barber: 'Melo', status: 'confirmed' },
+            { name: 'Rui Costa', service: 'Corte + Barba', time: '11:00', barber: 'Hugo', status: 'pending' },
+            { name: 'Pedro Alves', service: 'Corte + Sobrancelha', time: '14:00', barber: 'Melo', status: 'confirmed' },
+            { name: 'André Mendes', service: 'Corte + Barba + limpeza de pele', time: '15:30', barber: 'Hugo', status: 'confirmed' },
+            { name: 'Carlos Rocha', service: 'Corte Pai e Filho', time: '16:30', barber: 'Melo', status: 'pending' },
+            { name: 'Diogo Martins', service: 'Corte + Barba c/ toalha quente', time: '17:30', barber: 'Hugo', status: 'confirmed' },
+            { name: 'Ricardo Nunes', service: 'Corte + Pêra e Bigode', time: '18:30', barber: 'Melo', status: 'confirmed' }
+        ];
+
+        const popularServices = [
+            { name: 'Corte de Cabelo', percentage: 20, price: '13€' },
+            { name: 'Corte Pai e Filho', percentage: 8, price: '26€' },
+            { name: 'Corte + Sobrancelha', percentage: 10, price: '15€' },
+            { name: 'Corte + Barba', percentage: 15, price: '17€' },
+            { name: 'Corte + Barba + Sobrancelhas', percentage: 12, price: '19€' },
+            { name: 'Corte + Pêra e Bigode', percentage: 8, price: '15€' },
+            { name: 'Corte + Pêra e Bigode + Sobrancelha', percentage: 7, price: '17€' },
+            { name: 'Contornos (Cabelo + Barba)', percentage: 5, price: '10€' },
+            { name: 'Barba', percentage: 5, price: '8€' },
+            { name: 'Corte + Barba c/ toalha quente', percentage: 5, price: '19€' },
+            { name: 'Corte + limpeza de pele', percentage: 3, price: '22€' },
+            { name: 'Corte + Barba + limpeza de pele', percentage: 2, price: '25€' }
+        ];
+
+        // DOM Elements
+        const loginPage = document.getElementById('loginPage');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const loginForm = document.getElementById('loginForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const todayBookingsTable = document.getElementById('todayBookings');
+        const serviceChart = document.getElementById('serviceChart');
+
+        // Check if user is logged in
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+        }
+
+        // Show login page
+        function showLogin() {
+            loginPage.style.display = 'flex';
+            adminDashboard.style.display = 'none';
+        }
+
+        // Show admin dashboard
+        function showDashboard() {
+            loginPage.style.display = 'none';
+            adminDashboard.style.display = 'block';
+            renderDashboard();
+        }
+
+        // Render dashboard data
+        function renderDashboard() {
+            // Render today's bookings
+            todayBookingsTable.innerHTML = '';
+            todayBookings.forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${booking.name}</td>
+                    <td>${booking.service}</td>
+                    <td>${booking.time}</td>
+                    <td>${booking.barber}</td>
+                    <td><span class="status ${booking.status}">
+                        ${booking.status === 'confirmed' ? 'Confirmado' : 'Pendente'}
+                    </span></td>
+                `;
+                todayBookingsTable.appendChild(row);
+            });
+
+            // Render service chart
+            serviceChart.innerHTML = '';
+            popularServices.forEach(service => {
+                const barContainer = document.createElement('div');
+                barContainer.className = 'chart-bar';
+                
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = `${service.percentage * 2}px`;
+                bar.setAttribute('title', `${service.percentage}%`);
+                
+                const label = document.createElement('div');
+                label.className = 'bar-label';
+                label.textContent = service.name;
+                
+                barContainer.appendChild(bar);
+                barContainer.appendChild(label);
+                serviceChart.appendChild(barContainer);
+            });
+        }
+
+        // Event Listeners
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // In a real app, validate credentials with the server
+            if (username === 'admin' && password === 'admin123') {
+                localStorage.setItem('isLoggedIn', 'true');
+                showDashboard();
+            } else {
+                alert('Credenciais inválidas. Tente novamente.');
+            }
+        });
+
+        logoutBtn.addEventListener('click', function() {
+            localStorage.removeItem('isLoggedIn');
+            showLogin();
+        });
+
+        // Menu navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'block';
+                
+                // Update page title
+                const menuItem = document.querySelector(`[data-section="${sectionId.replace('Section', '')}"]`);
+                if (menuItem) {
+                    const sectionName = menuItem.querySelector('span').textContent;
+                    document.getElementById('pageTitle').textContent = sectionName;
+                    
+                    // Load section data if needed
+                    if (sectionId === 'bookingsSection') {
+                        loadBookings();
+                    } else if (sectionId === 'customersSection') {
+                        loadCustomers();
+                    } else if (sectionId === 'analyticsSection') {
+                        loadAnalytics();
+                    } else if (sectionId === 'settingsSection') {
+                        loadSettings();
+                    }
+                }
+            }
+        }
+
+        // Initialize menu navigation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all menu items
+                document.querySelectorAll('.menu-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Add active class to clicked menu item
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const section = this.getAttribute('data-section');
+                if (section) {
+                    showSection(section + 'Section');
+                }
+            });
+        });
+        
+        // Initialize sections
+        function initSections() {
+            // Show dashboard by default
+            showSection('dashboardSection');
+            
+            // Load initial data
+            loadBookings();
+            loadCustomers();
+            loadAnalytics();
+            loadSettings();
+        }
+        
+        // Sample data loading functions
+        function loadBookings() {
+            // In a real app, this would be an API call
+            const bookings = [
+                { date: '26/11/2023', time: '09:00', customer: 'João Silva', service: 'Corte de Cabelo', barber: 'Hugo', status: 'confirmed' },
+                { date: '26/11/2023', time: '10:00', customer: 'Miguel Santos', service: 'Barba', barber: 'Melo', status: 'completed' },
+                { date: '26/11/2023', time: '11:00', customer: 'Rui Costa', service: 'Corte + Barba', barber: 'Hugo', status: 'pending' },
+                { date: '27/11/2023', time: '10:00', customer: 'Pedro Alves', service: 'Corte de Cabelo', barber: 'Melo', status: 'confirmed' },
+                { date: '27/11/2023', time: '14:00', customer: 'André Mendes', service: 'Tratamento Completo', barber: 'Hugo', status: 'confirmed' }
+            ];
+            
+            const tbody = document.getElementById('allBookings');
+            if (tbody) {
+                tbody.innerHTML = bookings.map(booking => `
+                    <tr>
+                        <td>${booking.date}</td>
+                        <td>${booking.time}</td>
+                        <td>${booking.customer}</td>
+                        <td>${booking.service}</td>
+                        <td>${booking.barber}</td>
+                        <td><span class="status ${booking.status}">
+                            ${booking.status === 'confirmed' ? 'Confirmado' : 
+                              booking.status === 'completed' ? 'Concluído' : 'Pendente'}
+                        </span></td>
+                        <td class="actions">
+                            <button class="btn-icon" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon" title="Cancelar"><i class="fas fa-times"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+        
+        function loadCustomers() {
+            // In a real app, this would be an API call
+            const customers = [
+                { name: 'João Silva', email: 'joao@example.com', phone: '912345678', visits: 5, lastVisit: '20/11/2023' },
+                { name: 'Miguel Santos', email: 'miguel@example.com', phone: '923456789', visits: 3, lastVisit: '15/11/2023' },
+                { name: 'Rui Costa', email: 'rui@example.com', phone: '934567890', visits: 2, lastVisit: '10/11/2023' },
+                { name: 'Pedro Alves', email: 'pedro@example.com', phone: '945678901', visits: 7, lastVisit: '05/11/2023' },
+                { name: 'André Mendes', email: 'andre@example.com', phone: '956789012', visits: 4, lastVisit: '01/11/2023' }
+            ];
+            
+            const tbody = document.getElementById('customersList');
+            if (tbody) {
+                tbody.innerHTML = customers.map(customer => `
+                    <tr>
+                        <td>${customer.name}</td>
+                        <td>${customer.email}</td>
+                        <td>${customer.phone}</td>
+                        <td>${customer.visits}</td>
+                        <td>${customer.lastVisit}</td>
+                        <td class="actions">
+                            <button class="btn-icon" title="Ver Histórico"><i class="fas fa-history"></i></button>
+                            <button class="btn-icon" title="Editar"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+        
+        function loadAnalytics() {
+            // In a real app, this would initialize charts with real data
+            console.log('Loading analytics data...');
+            
+            // Example of initializing a chart (you'll need to include Chart.js)
+            // const ctx = document.getElementById('bookingsChart').getContext('2d');
+            // new Chart(ctx, { ... });
+        }
+        
+        function loadSettings() {
+            // Load opening hours
+            const days = [
+                'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira',
+                'Sexta-feira', 'Sábado', 'Domingo'
+            ];
+            
+            const hoursForm = document.getElementById('openingHoursForm');
+            if (hoursForm) {
+                hoursForm.innerHTML = days.map(day => `
+                    <div class="form-group">
+                        <label>${day}</label>
+                        <div class="time-inputs">
+                            <input type="time" value="09:00">
+                            <span>às</span>
+                            <input type="time" value="19:00">
+                            <label class="checkbox-container">
+                                <input type="checkbox" ${['Sábado', 'Domingo'].includes(day) ? 'checked' : ''}>
+                                <span class="checkmark"></span>
+                                Fechado
+                            </label>
+                        </div>
+                    </div>
+                `).join('') + '<button type="submit" class="btn btn-primary">Atualizar Horário</button>';
+            }
+            
+            // Load services
+            const servicesList = document.getElementById('servicesList');
+            if (servicesList) {
+                servicesList.innerHTML = popularServices.map((service, index) => `
+                    <div class="service-item">
+                        <div class="service-info">
+                            <span class="service-name">${service.name}</span>
+                            <span class="service-price">${service.price}</span>
+                        </div>
+                        <div class="service-actions">
+                            <button class="btn-icon edit-service" data-id="${index}" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-icon delete-service" data-id="${index}" title="Remover">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Initialize the app
+        checkAuth();
+        
+        // Initialize sections after authentication
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            initSections();
+        }
+    </script>
+</body>
+</html>

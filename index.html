@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Barbearia Hugo Nunes - Cortes de cabelo de precisão e serviços profissionais de cuidados com a barba. A combinação perfeita de técnicas tradicionais e estilo moderno.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Hugo Nunes Barber</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logoin .png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    <style>
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .popup-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        .popup-content h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .popup-content p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .popup-btn {
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .popup-btn:hover {
+            background-color: #c19b2e;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Popup (initially hidden) -->
+    <div id="popupOverlay" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <span class="close-btn" id="closePopup">&times;</span>
+            <h2>Bem-vindo à Barbearia Hugo Nunes</h2>
+            <p>Agende já o seu horário e tenha uma experiência premium de cuidados masculinos.</p>
+            <a href="#booking" class="popup-btn">Agendar Agora</a>
+        </div>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Hugo Nunes Barber</a>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#gallery">Galeria</a></li>
+                <li><a href="#about">Sobre Nós</a></li>
+                <li><a href="#contact">Contactos</a></li>
+                <li><a href="#booking" class="btn btn-booking">Agendar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Hugo Nunes<br>Barber</h1>
+                <p>Experiencie a arte da barbearia tradicional com técnicas modernas dos nossos talentosos barbeiros</p>
+                <a href="#booking" class="btn btn-primary">Agendar</a>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+    </header>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Os Nossos Serviços</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h3>Corte de Cabelo</h3>
+                    <p>Cortes de precisão personalizados para o seu estilo e formato de rosto.</p>
+                    <span class="price">13€</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Barba</h3>
+                    <p>Modelação e acabamento de barba para um visual impecável.</p>
+                    <span class="price">8€</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Corte e Barba c/toalha quente</h3>
+                    <p>Barba feita à navalha com toalha quente e produtos premium.</p>
+                    <span class="price">19€</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-male"></i>
+                    </div>
+                    <h3>Tratamento Completo</h3>
+                    <p>Corte, barba e tratamento facial completo.</p>
+                    <span class="price">25€</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title">O Nosso Trabalho</h2>
+            <div class="gallery-grid">
+                <!-- Placeholder for gallery images -->
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Conheça os Nossos Barbeiros</h2>
+                    <div class="barber-profile">
+                        <h3>Hugo Nunes</h3>
+                        <p>Com mais de 15 anos de experiência na arte da barbearia, Hugo aperfeiçoou a arte do cuidado masculino. A sua experiência em técnicas clássicas e contemporâneas garante que cada cliente saia com o melhor visual possível.</p>
+                        <div class="signature">
+                            <p>Hugo Nunes</p>
+                            <span>Barbeiro Mestre & Co-proprietário</span>
+                        </div>
+                    </div>
+                    
+                    <div class="barber-profile">
+                        <h3>Melo</h3>
+                        <p>Melo traz uma nova perspetiva e uma abordagem moderna à barbearia tradicional. Especializado em estilos contemporâneos e cortes de precisão, a atenção ao detalhe e dedicação de Melo fizeram dele um dos favoritos dos nossos clientes.</p>
+                        <div class="signature">
+                            <p>Melo</p>
+                            <span>Barbeiro Mestre & Co-proprietário</span>
+                        </div>
+                    </div>
+                    
+                    <p class="about-summary">Na Barbearia Hugo Nunes, acreditamos que um grande corte de cabelo é mais do que um simples serviço - é uma experiência. A nossa barbearia foi projetada para ser um santuário onde os homens podem relaxar, renovar-se e sair com o melhor visual possível.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://cdn.discordapp.com/attachments/806915231430344765/1443341456000421898/upscale1764189761964.png?ex=6928b7fb&is=6927667b&hm=f6c5c5e565d193c736325be641997ac3f972935f3bf325110d90c7e196c277c5&" alt="Equipe da Barbearia Hugo Nunes" class="barber-team-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <!-- Replace the entire booking form section with this: -->
+<section class="booking" id="booking">
+    <div class="container">
+        <div class="booking-container">
+            <form id="bookingForm" class="booking-form">
+                <h2>Agendar</h2>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="O Seu Nome" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="O Seu Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phone" name="phone" placeholder="Número de Telemóvel" required>
+                </div>
+                <div class="form-group">
+                    <select id="barber" name="barber" required>
+                        <option value="" disabled selected>Selecione o Barbeiro</option>
+                        <option value="hugo">Hugo Nunes</option>
+                        <option value="melo">Melo</option>
+                        <option value="any">Sem Preferência</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="service" name="service" required>
+                        <option value="" disabled selected>Selecione o Serviço</option>
+                        <option value="haircut">Corte de Cabelo - 13€</option>
+                        <option value="haircut">Corte Pai e Filho - 26€</option>
+                        <option value="haircut">Corte + Sobrancelha - 15€</option>
+                        <option value="haircut">Corte + Barba - 17€</option>
+                        <option value="haircut">Corte + Barba + Sobrancelhas - 19€</option>
+                        <option value="haircut">Corte + Pêra e Bigode - 15€</option>
+                        <option value="haircut">Corte + Pêra e Bigode + Sobrancelha - 17€</option>
+                        <option value="haircut">Contornos (Cabelo + Barba) - 10€</option>
+                        <option value="beard-trim">Barba - 8€</option>
+                        <option value="beard-trim">Corte + Barba c/ toalha quente - 19€</option>
+                        <option value="hot-towel">Corte + limpeza de pele - 22€</option>
+                        <option value="full-grooming">Corte + Barba + limpeza de pele - 25€</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Pedidos Especiais (Opcional)"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Agendar Agora</button>
+            </form>
+            <div class="booking-info">
+                <h3>Horário de Funcionamento</h3>
+                <ul class="hours-list">
+                    <li><span>Segunda a Sexta:</span> 9:00 - 19:00</li>
+                    <li><span>Sábado:</span> 9:00 - 17:00</li>
+                    <li><span>Domingo:</span> Encerrado</li>
+                </ul>
+                <div class="barber-availability">
+                    <h4>Disponibilidade dos Barbeiros</h4>
+                    <p>Hugo: Todos os dias</p>
+                    <p>Melo: Todos os dias</p>
+                </div>
+                <div class="contact-info">
+                    <h4>Contacte-nos</h4>
+                    <p><i class="fas fa-phone"></i> (+351) 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@hugonunesbarbearia.pt</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Rua da Barbearia 123, Lisboa, Portugal</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/hugonunesbarbershop/?igshid=MzRlODBiNWFlZA%3D%3D" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Contact & Map Section -->
+    <section class="contact" id="contact">
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3104.961545716673!2d-9.04414807141769!3d38.901994673307826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd19291780f808f7%3A0x405323f052d0c2e9!2sHUGO%20NUNES%20BARBERSHOP!5e0!3m2!1spt-PT!2spt!4v1764184908393!5m2!1spt-PT!2spt"  
+                width="100%" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#" class="logo">Hugo Nunes<span></span></a>
+                    <p>Cortes de precisão e serviços de cuidados pessoais premium para o homem moderno.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#services">Serviços</a></li>
+                        <li><a href="#gallery">Galeria</a></li>
+                        <li><a href="#about">Sobre Nós</a></li>
+                        <li><a href="#contact">Contactos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contacte-nos</h4>
+                    <p><i class="fas fa-phone"></i> (+351) 969 976 530</p>
+                    <p><i class="fas fa-envelope"></i> info@hugonunesbarbearia.pt</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Av. 5 de Outubro, 2615-063 Alverca do Ribatejo</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Barbearia Hugo Nunes. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/hugonunesbarbershop/?igshid=MzRlODBiNWFlZA%3D%3D" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <script>
+        // ====================================
+        // POPUP CONTROL
+        // Set this to true to show popup on load, or false to hide it
+        const SHOW_POPUP = true;
+        // ====================================
+        
+        // Initialize popup state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const popup = document.getElementById('popupOverlay');
+            
+            // Only show popup if SHOW_POPUP is true and it hasn't been shown in this session
+            if (SHOW_POPUP && !sessionStorage.getItem('popupShown')) {
+                popup.style.display = 'flex';
+                sessionStorage.setItem('popupShown', 'true');
+            }
+        });
+        
+        // Close popup when clicking the X button
+        document.getElementById('closePopup').addEventListener('click', function() {
+            document.getElementById('popupOverlay').style.display = 'none';
+        });
+        
+        // Close popup when clicking outside content
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+        
+        // Close popup when clicking the booking button
+        document.querySelector('.popup-btn').addEventListener('click', function() {
+            document.getElementById('popupOverlay').style.display = 'none';
+        });
+        
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('popupOverlay').style.display = 'none';
+            }
+        });
+        
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingForm = document.getElementById('bookingForm');
+            
+            // Initialize bookings array in localStorage if it doesn't exist
+            if (!localStorage.getItem('barberBookings')) {
+                localStorage.setItem('barberBookings', JSON.stringify([]));
+            }
+
+            // Handle form submission
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = {
+                    id: Date.now(),
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    barber: document.getElementById('barber').value,
+                    service: document.getElementById('service').value,
+                    date: document.getElementById('date').value,
+                    time: document.getElementById('time').value,
+                    message: document.getElementById('message').value,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                };
+
+                // Save to localStorage
+                const bookings = JSON.parse(localStorage.getItem('barberBookings'));
+                bookings.push(formData);
+                localStorage.setItem('barberBookings', JSON.stringify(bookings));
+
+                // Show success message
+                alert('A sua marcação foi agendada com sucesso!');
+                bookingForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>
